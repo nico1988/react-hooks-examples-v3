@@ -13,12 +13,28 @@ const RefComponent = () => {
     );
   }
 
+  function TextInputWithFocusButton() {
+    const inputEl = useRef(null);
+    const onButtonClick = () => {
+      // `current` points to the mounted text input element
+      inputEl.current.focus();
+      inputEl.current.value = Math.random();
+    };
+    return (
+      <>
+        <input ref={inputEl} type="text" />
+        <button onClick={onButtonClick}>Focus the input</button>
+      </>
+    );
+  }
+
   return (
     <div>
       <h1>useRef Example</h1>
       <button onClick={incrementAndDelayLogging}>delay logging</button>
       <h4>state: {stateNumber}</h4>
       <h4>ref: {numRef.current}</h4>
+      <TextInputWithFocusButton />
     </div>
   );
 };

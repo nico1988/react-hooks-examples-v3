@@ -6,6 +6,8 @@ const limitRGB = (num) => (num < 0 ? 0 : num > 255 ? 255 : num);
 const step = 50;
 
 const reducer = (state, action) => {
+  console.log("state:::", state);
+  console.log("action:::", action);
   switch (action.type) {
     case "INCREMENT_R":
       return Object.assign({}, state, { r: limitRGB(state.r + step) });
