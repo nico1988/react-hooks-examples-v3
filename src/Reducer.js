@@ -26,11 +26,35 @@ const reducer = (state, action) => {
   }
 };
 
-const ReducerComponent = () => {
-  const [{ r, g, b }, dispatch] = useReducer(reducer, { r: 0, g: 0, b: 0 });
+const initialState = { count: 0 };
 
+function reducerCounter(state, action) {
+  switch (action.type) {
+    case "increment":
+      return { count: state.count + 1 };
+    case "decrement":
+      return { count: state.count - 1 };
+    default:
+      throw new Error();
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducerCounter, initialState);
   return (
-    <div>
+    <>
+      Count: {state.count}
+      <button onClick={() => dispatch({ type: "decrement" })}>-</button>
+      <button onClick={() => dispatch({ type: "increment" })}>+</button>
+    </>
+  );
+}
+
+function RGBControl() {
+  const [{ r, g, b }, dispatch] = useReducer(reducer, { r: 0, g: 0, b: 0 });
+  return (
+    <>
+      {`r:${r} - g:${g} - b:${b}`}
       <h1 style={{ color: `rgb(${r}, ${g}, ${b})` }}>useReducer Example</h1>
       <div>
         <span>r</span>
@@ -47,6 +71,15 @@ const ReducerComponent = () => {
         <button onClick={() => dispatch({ type: "INCREMENT_B" })}>➕</button>
         <button onClick={() => dispatch({ type: "DECREMENT_B" })}>➖</button>
       </div>
+    </>
+  );
+}
+
+const ReducerComponent = () => {
+  return (
+    <div>
+      <RGBControl />
+      <Counter />
     </div>
   );
 };
